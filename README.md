@@ -37,7 +37,7 @@ cp .env.example .env    # Add your Razorpay test key
 npm run dev
 ```
 
-App runs at: `http://localhost:5173`
+App runs at: `https://pizza-app-eight-sable.vercel.app/`
 API runs at: `https://pizza-app-backend-nz14.onrender.com`
 
 ---
@@ -54,7 +54,7 @@ API runs at: `https://pizza-app-backend-nz14.onrender.com`
 | `ADMIN_EMAIL` | Email to receive stock alerts |
 | `RAZORPAY_KEY_ID` | Razorpay test key ID |
 | `RAZORPAY_KEY_SECRET` | Razorpay test secret |
-| `FRONTEND_URL` | `http://localhost:5173` |
+| `FRONTEND_URL` | `https://pizza-app-eight-sable.vercel.app/` |
 
 ### Frontend (`frontend/.env`)
 
