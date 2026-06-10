@@ -17,9 +17,21 @@ export const AuthProvider = ({ children }) => {
       try {
         const res = await api.get("/auth/me");
         setUser(res.data.user);
-      } catch {
-        localStorage.removeItem("token");
-        setUser(null);
+      } catch (err) {
+        // Only logout on 401 (invalid token), NOT on network errors
+        if (err.response?.status === 401) {
+          localStorage.removeItem("token");
+          setUser(null);
+        } else {
+          // Network error / backend sleeping - keep token, retry
+          try {
+            const res = await api.get("/auth/me");
+            setUser(res.data.user);
+          } catch {
+            // Still failing - keep token but don't log out
+            // User stays logged in, they can refresh again
+          }
+        }
       } finally {
         setLoading(false);
       }

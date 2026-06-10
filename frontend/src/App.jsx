@@ -22,7 +22,12 @@ import AdminInventory from "./pages/admin/Inventory";
 // Route guards
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  if (loading) return (
+    <div className="flex flex-col justify-center items-center h-screen bg-pizza-light">
+      <div className="text-5xl mb-4">🍕</div>
+      <p className="text-gray-500 text-sm">Loading...</p>
+    </div>
+  );
   return user ? children : <Navigate to="/login" />;
 };
 
