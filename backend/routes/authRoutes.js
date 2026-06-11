@@ -8,17 +8,21 @@ router.post("/login", login);
 router.get("/verify-email/:token", verifyEmail);
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password/:token", resetPassword);
-const User = require("../models/User");
+router.get("/me", protect, getMe);
 
+const User = require("../models/User");
 router.get("/verify-dev/:email", async (req, res) => {
-  const user = await User.findOneAndUpdate(
-    { email: req.params.email },
-    { isEmailVerified: true },
-    { new: true }
-  );
-  if (!user) return res.status(404).json({ message: "User not found" });
-  res.json({ message: `${user.email} verified!` });
+  try {
+    const user = await User.findOneAndUpdate(
+      { email: req.params.email },
+      { isEmailVerified: true },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ message: `${user.email} verified!` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 module.exports = router;
-
