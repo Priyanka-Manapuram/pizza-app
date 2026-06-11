@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <nav className="bg-pizza-dark text-white px-6 py-3 flex items-center justify-between shadow-md">
       <Link to={user?.role === "admin" ? "/admin" : "/dashboard"} className="text-xl font-bold flex items-center gap-2">
-        🍕 PizzaApp
+        🍕 PizzaSlice
       </Link>
       <div className="flex items-center gap-4">
         {user?.role === "user" && (
