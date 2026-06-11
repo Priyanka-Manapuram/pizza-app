@@ -68,7 +68,7 @@ export default function UserDashboard() {
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source
-              src="pizza.mp4"
+              src="/pizza.mp4"
               type="video/mp4"
             />
           </video>
