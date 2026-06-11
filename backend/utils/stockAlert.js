@@ -1,21 +1,25 @@
 const Inventory = require("../models/Inventory");
+const User = require("../models/User");
 const { sendEmail } = require("./sendEmail");
 
 exports.checkAndAlertLowStock = async () => {
   try {
     const lowStockItems = await Inventory.find({
       $expr: { $lte: ["$quantity", "$threshold"] },
-      isAvailable: true,
     });
 
     if (lowStockItems.length === 0) return;
 
+    // Get admin email from DB
+    const admin = await User.findOne({ role: "admin" });
+    const adminEmail = admin?.notificationEmail || admin?.email || process.env.ADMIN_EMAIL;
+
     const itemList = lowStockItems
-      .map((i) => `<li><b>${i.name}</b> (${i.category}): ${i.quantity} ${i.unit} remaining</li>`)
+      .map((i) => `<li><b>${i.name}</b> (${i.category}): ${i.quantity} units remaining</li>`)
       .join("");
 
     await sendEmail({
-      to: process.env.ADMIN_EMAIL,
+      to: adminEmail,
       subject: "⚠️ PizzaApp Low Stock Alert",
       html: `
         <h2>Low Stock Warning</h2>
@@ -25,7 +29,7 @@ exports.checkAndAlertLowStock = async () => {
       `,
     });
 
-    console.log(`Low stock alert sent for ${lowStockItems.length} items.`);
+    console.log(`Low stock alert sent to ${adminEmail}`);
   } catch (err) {
     console.error("Stock alert error:", err.message);
   }
