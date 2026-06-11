@@ -17,7 +17,7 @@ const seedData = [
   { category: "sauce", name: "Pesto", quantity: 80, pricePerUnit: 40 },
   { category: "sauce", name: "BBQ", quantity: 90, pricePerUnit: 35 },
   { category: "sauce", name: "Alfredo", quantity: 70, pricePerUnit: 45 },
-  { category: "sauce", name: "Marinara", quantity: 60, pricePerUnit: 40 },
+  { category: "sauce", name: "Chipotle", quantity: 25, pricePerUnit: 40 },
   // Cheeses
   { category: "cheese", name: "Mozzarella", quantity: 100, pricePerUnit: 60 },
   { category: "cheese", name: "Cheddar", quantity: 80, pricePerUnit: 55 },
