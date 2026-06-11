@@ -4,9 +4,18 @@ import api from "../../services/api";
 
 const STATUS_MAP = {
   pending: { label: "Pending", color: "bg-gray-100 text-gray-600" },
-  order_received: { label: "Order Received", color: "bg-blue-100 text-blue-700" },
-  in_kitchen: { label: "In the Kitchen 👨‍🍳", color: "bg-yellow-100 text-yellow-700" },
-  sent_to_delivery: { label: "Out for Delivery 🛵", color: "bg-orange-100 text-orange-700" },
+  order_received: {
+    label: "Order Received",
+    color: "bg-blue-100 text-blue-700",
+  },
+  in_kitchen: {
+    label: "In the Kitchen 👨‍🍳",
+    color: "bg-yellow-100 text-yellow-700",
+  },
+  sent_to_delivery: {
+    label: "Out for Delivery 🛵",
+    color: "bg-orange-100 text-orange-700",
+  },
   delivered: { label: "Delivered ✅", color: "bg-green-100 text-green-700" },
   cancelled: { label: "Cancelled ❌", color: "bg-red-100 text-red-600" },
 };
@@ -50,25 +59,66 @@ export default function MyOrders() {
             {orders.map((order) => {
               const s = STATUS_MAP[order.status] || STATUS_MAP.pending;
               return (
-                <div key={order._id} className="bg-white rounded-2xl shadow p-6">
+                <div
+                  key={order._id}
+                  className="bg-white rounded-2xl shadow p-6"
+                >
                   <div className="flex justify-between items-start mb-3">
                     <div>
-                      <p className="text-xs text-gray-400">Order #{order._id.slice(-8).toUpperCase()}</p>
-                      <p className="text-sm text-gray-500">{new Date(order.createdAt).toLocaleString()}</p>
+                      <p className="text-xs text-gray-400">
+                        Order #{order._id.slice(-8).toUpperCase()}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {new Date(order.createdAt).toLocaleString()}
+                      </p>
                     </div>
-                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${s.color}`}>{s.label}</span>
+                    <span
+                      className={`text-xs font-semibold px-3 py-1 rounded-full ${s.color}`}
+                    >
+                      {s.label}
+                    </span>
                   </div>
                   <div className="text-sm text-gray-600 space-y-1">
-                    <p><span className="font-medium">Base:</span> {order.pizza.base?.name}</p>
-                    <p><span className="font-medium">Sauce:</span> {order.pizza.sauce?.name}</p>
-                    <p><span className="font-medium">Cheese:</span> {order.pizza.cheese?.name}</p>
-                    {order.pizza.veggies?.length > 0 && (
-                      <p><span className="font-medium">Veggies:</span> {order.pizza.veggies.map(v => v.name).join(", ")}</p>
+                    {order.presetName ? (
+                      <p className="font-medium text-pizza-dark">
+                        🍕 {order.presetName}
+                      </p>
+                    ) : (
+                      <>
+                        <p>
+                          <span className="font-medium">Base:</span>{" "}
+                          {order.pizza?.base?.name}
+                        </p>
+                        <p>
+                          <span className="font-medium">Sauce:</span>{" "}
+                          {order.pizza?.sauce?.name}
+                        </p>
+                        <p>
+                          <span className="font-medium">Cheese:</span>{" "}
+                          {order.pizza?.cheese?.name}
+                        </p>
+                        {order.pizza?.veggies?.length > 0 && (
+                          <p>
+                            <span className="font-medium">Veggies:</span>{" "}
+                            {order.pizza.veggies.map((v) => v.name).join(", ")}
+                          </p>
+                        )}
+                        {order.pizza?.meats?.length > 0 && (
+                          <p>
+                            <span className="font-medium">Meat:</span>{" "}
+                            {order.pizza.meats.map((m) => m.name).join(", ")}
+                          </p>
+                        )}
+                      </>
                     )}
                   </div>
                   <div className="mt-3 flex justify-between items-center border-t pt-3">
-                    <span className="font-bold text-pizza-red text-lg">₹{order.totalPrice}</span>
-                    <span className="text-xs text-gray-400">{order.deliveryAddress}</span>
+                    <span className="font-bold text-pizza-red text-lg">
+                      ₹{order.totalPrice}
+                    </span>
+                    <span className="text-xs text-gray-400">
+                      {order.deliveryAddress}
+                    </span>
                   </div>
                 </div>
               );

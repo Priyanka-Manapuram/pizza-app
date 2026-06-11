@@ -5,33 +5,35 @@ const { checkAndAlertLowStock } = require("../utils/stockAlert");
 // @POST /api/orders  - place order after payment
 exports.createOrder = async (req, res) => {
   try {
-    const { pizza, totalPrice, deliveryAddress, payment } = req.body;
+    const { pizza, presetName, totalPrice, deliveryAddress, payment } = req.body;
 
-    const order = await Order.create({
+    const orderData = {
       user: req.user._id,
-      pizza,
       totalPrice,
       deliveryAddress,
       payment,
+      presetName: presetName || "",
       status: "order_received",
       statusHistory: [{ status: "order_received" }],
-    });
+    };
 
-    // Deduct stock
-    const itemsToDeduct = [
-      pizza.base,
-      pizza.sauce,
-      pizza.cheese,
-      ...(pizza.veggies || []),
-      ...(pizza.meats || []),
-    ];
-    for (const itemId of itemsToDeduct) {
-      await Inventory.findByIdAndUpdate(itemId, { $inc: { quantity: -1 } });
+    if (pizza) {
+      orderData.pizza = pizza;
+      // Deduct stock
+      const itemsToDeduct = [
+        pizza.base,
+        pizza.sauce,
+        pizza.cheese,
+        ...(pizza.veggies || []),
+        ...(pizza.meats || []),
+      ];
+      for (const itemId of itemsToDeduct) {
+        if (itemId) await Inventory.findByIdAndUpdate(itemId, { $inc: { quantity: -1 } });
+      }
+      await checkAndAlertLowStock();
     }
 
-    // Check and alert low stock
-    await checkAndAlertLowStock();
-
+    const order = await Order.create(orderData);
     const populated = await Order.findById(order._id)
       .populate("user", "name email")
       .populate("pizza.base pizza.sauce pizza.cheese pizza.veggies pizza.meats");
