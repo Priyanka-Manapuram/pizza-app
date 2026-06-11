@@ -1,10 +1,12 @@
+const mongoose = require("mongoose");
+
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     pizza: {
-      base: { type: mongoose.Schema.Types.ObjectId, ref: "Inventory", required: true },
-      sauce: { type: mongoose.Schema.Types.ObjectId, ref: "Inventory", required: true },
-      cheese: { type: mongoose.Schema.Types.ObjectId, ref: "Inventory", required: true },
+      base: { type: mongoose.Schema.Types.ObjectId, ref: "Inventory" },
+      sauce: { type: mongoose.Schema.Types.ObjectId, ref: "Inventory" },
+      cheese: { type: mongoose.Schema.Types.ObjectId, ref: "Inventory" },
       veggies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Inventory" }],
       meats: [{ type: mongoose.Schema.Types.ObjectId, ref: "Inventory" }],
     },
@@ -33,3 +35,5 @@ const orderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+module.exports = mongoose.model("Order", orderSchema);
