@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
     resetPasswordExpire: Date,
     phone: { type: String, default: "" },
     address: { type: String, default: "" },
-    notificationEmail: { type: String, default: "" },
+    notificationEmail: { type: String, default: "" }, 
   },
   { timestamps: true }
 );
