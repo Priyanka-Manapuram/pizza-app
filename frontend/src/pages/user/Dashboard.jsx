@@ -29,7 +29,7 @@ export default function UserDashboard() {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount,
         currency,
-        name: "PizzaApp",
+        name: "PizzaSlice",
         description: `${pizza.name} Pizza`,
         order_id: orderId,
         handler: async (response) => {
