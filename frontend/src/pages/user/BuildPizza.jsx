@@ -106,18 +106,18 @@ export default function BuildPizza() {
     }
   };
 
-  const ItemCard = ({ item, selected: isSelected, onClick, multi }) => (
-    <button
-      onClick={onClick}
-      className={`p-4 border-2 rounded-xl text-left transition ${
-        isSelected ? "border-pizza-red bg-red-50" : "border-gray-200 hover:border-pizza-orange"
-      }`}
-    >
-      <p className="font-semibold text-pizza-dark">{item.name}</p>
-      <p className="text-pizza-red text-sm font-bold">+₹{item.pricePerUnit}</p>
-      <p className="text-xs text-gray-400">{item.quantity} left</p>
-    </button>
-  );
+  const ItemCard = ({ item, isSelected, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`p-4 border-2 rounded-xl text-left transition ${
+      isSelected ? "border-pizza-red bg-red-50" : "border-gray-200 hover:border-pizza-orange"
+    }`}
+  >
+    <p className="font-semibold text-pizza-dark">{item.name}</p>
+    <p className="text-pizza-red text-sm font-bold">+₹{item.pricePerUnit}</p>
+    <p className="text-xs text-gray-400">{item.quantity} left</p>
+  </button>
+);
 
   if (loading) return <div className="flex justify-center items-center h-screen">Loading ingredients...</div>;
 
