@@ -100,24 +100,24 @@ export default function BuildPizza() {
           if (verifyRes.data.verified) {
             // Place order
             await api.post("/orders", {
-              pizza: {
-                base: selected.base._id,
-                sauce: selected.sauce._id,
-                cheese: selected.cheese._id,
-                veggies: selected.veggies.map((v) => v._id),
-                meats: selected.meats.map((m) => m._id),
-              },
-              totalPrice: amount,
-              deliveryAddress: address,
-              phone: phone,
-              payment: {
-                razorpayOrderId: response.razorpay_order_id,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpaySignature: response.razorpay_signature,
-                status: "paid",
-                amount,
-              },
-            });
+  pizza: {
+    base: selected.base._id,
+    sauce: selected.sauce._id,
+    cheese: selected.cheese._id,
+    veggies: selected.veggies.map((v) => v._id),
+    meats: selected.meats.map((m) => m._id),
+  },
+  totalPrice: amount,
+  deliveryAddress: address,
+  phone: phone,
+  payment: {
+    razorpayOrderId: response.razorpay_order_id,
+    razorpayPaymentId: response.razorpay_payment_id,
+    razorpaySignature: response.razorpay_signature,
+    status: "paid",
+    amount,
+  },
+});
             toast.success("🎉 Order placed successfully!");
             navigate("/my-orders");
           }
@@ -310,7 +310,7 @@ export default function BuildPizza() {
                   onClick={() => setStep(4)}
                   className="flex-1 bg-pizza-red text-white py-2 rounded-lg"
                 >
-                  Review →
+                  Next →
                 </button>
               </div>
             </>
