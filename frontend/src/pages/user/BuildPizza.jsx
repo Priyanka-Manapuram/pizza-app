@@ -27,6 +27,7 @@ export default function BuildPizza() {
   });
   const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(true);
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     const fetchInventory = async () => {
@@ -108,6 +109,7 @@ export default function BuildPizza() {
               },
               totalPrice: amount,
               deliveryAddress: address,
+              phone: phone,
               payment: {
                 razorpayOrderId: response.razorpay_order_id,
                 razorpayPaymentId: response.razorpay_payment_id,
@@ -405,6 +407,14 @@ export default function BuildPizza() {
                 placeholder="Delivery address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
+                className="w-full border rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-pizza-red"
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 className="w-full border rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-pizza-red"
                 required
               />
